@@ -76,7 +76,7 @@ public class BackpackPickupEvents {
         }
 
         //PLACEMENT
-        if (player.isShiftKeyDown() && heldItem.isEmpty() && !(player.getOffhandItem().getItem() instanceof BlockItem) && hasBackpack && event.getFace() == Direction.UP && !isAbove && isUnobstructed) {
+        if (player.isShiftKeyDown() && heldItem.isEmpty() && hasBackpack && event.getFace() == Direction.UP && !isAbove && isUnobstructed) {
 
             player.swing(hand);
             player.swingingArm = InteractionHand.MAIN_HAND;
@@ -92,6 +92,7 @@ public class BackpackPickupEvents {
 
 
             if (!level.isClientSide) {
+                Backpacks.LOGGER.debug(String.valueOf(level.getBlockState(pos.above()).isEmpty()));
                 level.setBlockAndUpdate(pos.above(), state);
                 level.setBlockEntity(blockEntity);
                 //((BackpackBlockEntity)blockEntity).updateColor();
@@ -100,7 +101,7 @@ public class BackpackPickupEvents {
                 chestSlotItem.shrink(1);
                 level.playSound(null, pos.above(), BPSounds.BACKPACK_PLACE.value(), SoundSource.BLOCKS);
             }
-            //event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
+            event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
             event.setCanceled(true);
         }
     }
