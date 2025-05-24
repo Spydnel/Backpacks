@@ -15,10 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.Equipable;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -79,7 +76,7 @@ public class BackpackPickupEvents {
         }
 
         //PLACEMENT
-        if (player.isShiftKeyDown() && heldItem.isEmpty() && hasBackpack && event.getFace() == Direction.UP && !isAbove && isUnobstructed) {
+        if (player.isShiftKeyDown() && heldItem.isEmpty() && !(player.getOffhandItem().getItem() instanceof BlockItem) && hasBackpack && event.getFace() == Direction.UP && !isAbove && isUnobstructed) {
 
             player.swing(hand);
             player.swingingArm = InteractionHand.MAIN_HAND;
