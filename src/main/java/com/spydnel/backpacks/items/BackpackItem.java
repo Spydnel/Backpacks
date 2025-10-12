@@ -3,10 +3,14 @@ package com.spydnel.backpacks.items;
 import com.google.common.base.Suppliers;
 import com.spydnel.backpacks.models.BackpackModel;
 import com.spydnel.backpacks.registry.BPLayers;
+import com.spydnel.backpacks.registry.BPSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -39,6 +43,10 @@ public class BackpackItem extends BlockItem implements Equipable {
     @Override
     public EquipmentSlot getEquipmentSlot() {
         return EquipmentSlot.CHEST;
+    }
+
+    public Holder<SoundEvent> getEquipSound() {
+        return BPSounds.BACKPACK_EQUIP;
     }
 
     @Override
