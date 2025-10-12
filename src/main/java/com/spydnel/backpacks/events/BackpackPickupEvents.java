@@ -54,7 +54,7 @@ public class BackpackPickupEvents {
 
         boolean hasBackpack = chestSlotItem.is(BPItems.BACKPACK);
         boolean hasChestPlate = !chestSlotItem.isEmpty();
-        boolean isAbove = (pos.above().getY() > player.getY());
+        boolean isAbove = (pos.above().getY() > player.getEyeY());
         boolean isUnobstructed = level.isUnobstructed(BPBlocks.BACKPACK.get().defaultBlockState(), pos.above(),
                 CollisionContext.of(player)) && level.getBlockState(pos.above()).canBeReplaced();
 
@@ -92,9 +92,9 @@ public class BackpackPickupEvents {
 
 
             if (!level.isClientSide) {
-                Backpacks.LOGGER.debug(String.valueOf(level.getBlockState(pos.above()).isEmpty()));
                 level.setBlockAndUpdate(pos.above(), state);
                 level.setBlockEntity(blockEntity);
+
                 //((BackpackBlockEntity)blockEntity).updateColor();
                 //blockEntity.getUpdateTag(level.registryAccess());
 
