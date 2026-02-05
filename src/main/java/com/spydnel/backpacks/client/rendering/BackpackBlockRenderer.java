@@ -1,11 +1,11 @@
-package com.spydnel.backpacks.models;
+package com.spydnel.backpacks.client.rendering;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.spydnel.backpacks.Backpacks;
-import com.spydnel.backpacks.blocks.BackpackBlock;
-import com.spydnel.backpacks.blocks.BackpackBlockEntity;
+import com.spydnel.backpacks.common.blocks.BackpackBlock;
+import com.spydnel.backpacks.common.blocks.BackpackBlockEntity;
 import com.spydnel.backpacks.registry.BPLayers;
 import net.irisshaders.iris.shaderpack.materialmap.NamespacedId;
 import net.irisshaders.iris.shaderpack.materialmap.WorldRenderingSettings;
@@ -17,14 +17,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.ModList;
@@ -35,26 +31,32 @@ public class BackpackBlockRenderer implements BlockEntityRenderer<BackpackBlockE
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "textures/entity/backpack.png");
     private static final ResourceLocation OVERLAY_TEXTURE = ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "textures/entity/backpack_overlay.png");
     private static final ResourceLocation BASE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "textures/entity/backpack_base.png");
+    private final ModelPart backpack;
+    private final ModelPart backpack1;
+    private final ModelPart backpack2;
+
     private final ModelPart base;
     private final ModelPart lid;
 
     public BackpackBlockRenderer(BlockEntityRendererProvider.Context context) {
-        ModelPart modelPart = context.bakeLayer(BPLayers.BACKPACK_BLOCK);
-        this.base = modelPart.getChild("base");
+        this.backpack = context.bakeLayer(BPLayers.BACKPACK_BLOCK);
+        this.backpack1 = context.bakeLayer(BPLayers.BACKPACK_BLOCK);
+        this.backpack2 = context.bakeLayer(BPLayers.BACKPACK_BLOCK);
+        this.base = backpack.getChild("base");
         this.lid = base.getChild("lid");
     }
 
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
-
-        PartDefinition base = partdefinition.addOrReplaceChild("base", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -11.0F, -4.0F, 10.0F, 11.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
-
-        PartDefinition lid = base.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(0, 19).addBox(-5.5F, -2.0F, -0.5F, 11.0F, 5.0F, 9.0F, new CubeDeformation(0.0F))
-                .texOffs(-9, 33).addBox(-5.5F, 1.0F, -0.5F, 11.0F, 0.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -11.0F, -4.0F));
-
-        return LayerDefinition.create(meshdefinition, 64, 64);
-    }
+//    public static LayerDefinition createBodyLayer() {
+//        MeshDefinition meshdefinition = new MeshDefinition();
+//        PartDefinition partdefinition = meshdefinition.getRoot();
+//
+//        PartDefinition base = partdefinition.addOrReplaceChild("base", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -11.0F, -4.0F, 10.0F, 11.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+//
+//        PartDefinition lid = base.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(0, 19).addBox(-5.5F, -2.0F, -0.5F, 11.0F, 5.0F, 9.0F, new CubeDeformation(0.0F))
+//                .texOffs(-9, 33).addBox(-5.5F, 1.0F, -0.5F, 11.0F, 0.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -11.0F, -4.0F));
+//
+//        return LayerDefinition.create(meshdefinition, 64, 64);
+//    }
 
 
     @Override

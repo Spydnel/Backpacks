@@ -1,9 +1,10 @@
 package com.spydnel.backpacks.registry;
 
 import com.spydnel.backpacks.Backpacks;
-import com.spydnel.backpacks.models.BackpackBlockRenderer;
-import com.spydnel.backpacks.models.BackpackLayer;
-import com.spydnel.backpacks.models.BackpackModel;
+import com.spydnel.backpacks.client.models.BackpackModel;
+import com.spydnel.backpacks.client.models.variants.OtherBackpackModel;
+import com.spydnel.backpacks.client.rendering.BackpackBlockRenderer;
+import com.spydnel.backpacks.client.rendering.BackpackLayer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -16,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -25,8 +25,11 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 @EventBusSubscriber(modid = Backpacks.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class BPLayers {
 
-    public static final ModelLayerLocation BACKPACK = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "backpack"), "main");
-    public static final ModelLayerLocation BACKPACK_BLOCK = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "backpack_block"), "main");
+    public static final ModelLayerLocation BACKPACK = getLocation("backpack");
+    public static final ModelLayerLocation BACKPACK_BLOCK = getLocation("backpack_block");
+
+    public static final ModelLayerLocation OTHER_BACKPACK = getLocation("other_backpack");
+    public static final ModelLayerLocation OTHER_BACKPACK_BLOCK = getLocation("other_backpack_block");
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
@@ -39,6 +42,10 @@ public class BPLayers {
         });
     }
 
+    private static ModelLayerLocation getLocation(String name) {
+        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, name), "main");
+    }
+
     private static float isDyed(ItemStack stack) {
         return stack.has(DataComponents.DYED_COLOR) ? 1 : 0;
     }
@@ -46,7 +53,10 @@ public class BPLayers {
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(BACKPACK, BackpackModel::createBodyLayer);
-        event.registerLayerDefinition(BACKPACK_BLOCK, BackpackBlockRenderer::createBodyLayer);
+        event.registerLayerDefinition(BACKPACK_BLOCK, BackpackModel::createBlockLayer);
+
+        event.registerLayerDefinition(OTHER_BACKPACK, OtherBackpackModel::createBodyLayer);
+        event.registerLayerDefinition(OTHER_BACKPACK_BLOCK, OtherBackpackModel::createBlockLayer);
     }
 
 

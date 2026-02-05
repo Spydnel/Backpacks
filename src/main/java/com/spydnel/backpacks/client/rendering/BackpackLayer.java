@@ -1,4 +1,4 @@
-package com.spydnel.backpacks.models;
+package com.spydnel.backpacks.client.rendering;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -28,20 +28,27 @@ import net.neoforged.fml.ModList;
 import org.figuramc.figura.avatar.Avatar;
 import org.figuramc.figura.avatar.AvatarManager;
 import org.figuramc.figura.model.ParentType;
+import tech.thatgravyboat.vanity.common.item.DesignHelper;
 
 import static com.spydnel.backpacks.registry.BPDataAttatchments.OPEN_COUNT;
 import static com.spydnel.backpacks.registry.BPDataAttatchments.OPEN_TICKS;
 
 @OnlyIn(Dist.CLIENT)
 public class BackpackLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M>{
-    private final ModelPart model;
+    private final ModelPart backpackModel;
+    private final ModelPart otherBackpackModel;
+
+    private ModelPart model;
+
     private final ModelPart parentBody;
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "textures/model/backpack.png");
-    private static final ResourceLocation OVERLAY_TEXTURE = ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "textures/model/backpack_overlay.png");
+
+    private static ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "textures/model/backpack.png");
+    private static ResourceLocation OVERLAY_TEXTURE = ResourceLocation.fromNamespaceAndPath(Backpacks.MODID, "textures/model/backpack_overlay.png");
 
     public BackpackLayer(RenderLayerParent renderer, EntityModelSet entityModelSet) {
         super(renderer);
-        this.model = entityModelSet.bakeLayer(BPLayers.BACKPACK);
+        this.backpackModel = entityModelSet.bakeLayer(BPLayers.BACKPACK);
+        this.otherBackpackModel = entityModelSet.bakeLayer(BPLayers.OTHER_BACKPACK);
         this.parentBody = this.getParentBody(renderer);
     }
 
@@ -53,8 +60,26 @@ public class BackpackLayer<T extends LivingEntity, M extends HumanoidModel<T>> e
 
 
         if (shouldRender(itemStack, livingEntity)) {
+            //VANITY STUFF
+            if (ModList.get().isLoaded("vanity")) {
+                ResourceLocation design = DesignHelper.getStyle(itemStack) != null ? DesignHelper.getStyle(itemStack).getFirst() : null;
+                //Backpacks.LOGGER.debug(String.valueOf(design));
+                if (design == null) {
+                    this.model = backpackModel;
+                } else {
+                    String path = design.toString();
+                    Backpacks.LOGGER.debug(path);
+                    switch (path) {
+                        case "backpacks:test" -> this.model = otherBackpackModel;
+                        default -> this.model = backpackModel;
+                    }
+                }
+            } else {
+                this.model = backpackModel;
+            }
+
+
             if (ModList.get().isLoaded("figura")) {
-                Backpacks.LOGGER.debug("figura is loaded");
                 figuraCompatStuff(poseStack, buffer, packedLight, livingEntity, partialTicks, itemStack, this);
             } else {
                 renderBaseLayer(poseStack, buffer, packedLight, livingEntity, partialTicks, itemStack, true);
@@ -97,7 +122,7 @@ public class BackpackLayer<T extends LivingEntity, M extends HumanoidModel<T>> e
         }
 
         this.model.getChild("base").getChild("lid").xRot = lidRot;
-        if (copyPose) { this.model.copyFrom(parentBody); }
+        if (copyPose) { this.backpackModel.copyFrom(parentBody); }
         VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(TEXTURE), itemStack.hasFoil());
         this.model.render(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
         renderColoredLayer(poseStack, buffer, packedLight, itemStack);

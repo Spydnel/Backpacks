@@ -1,6 +1,6 @@
 package com.spydnel.backpacks.mixins;
 
-import com.spydnel.backpacks.blocks.BackpackBlockEntity;
+import com.spydnel.backpacks.common.blocks.BackpackBlockEntity;
 import com.spydnel.backpacks.registry.BPBlocks;
 import com.spydnel.backpacks.registry.BPItems;
 import com.spydnel.backpacks.registry.BPSounds;
@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-import static com.spydnel.backpacks.blocks.BackpackBlock.*;
+import static com.spydnel.backpacks.common.blocks.BackpackBlock.*;
 
 @Mixin(value = ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity implements TraceableEntity {

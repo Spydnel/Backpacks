@@ -1,8 +1,7 @@
-package com.spydnel.backpacks.events;
+package com.spydnel.backpacks.common.events;
 
-import com.spydnel.backpacks.BackpackWearer;
 import com.spydnel.backpacks.Backpacks;
-import com.spydnel.backpacks.items.BackpackItemContainer;
+import com.spydnel.backpacks.common.items.BackpackItemContainer;
 import com.spydnel.backpacks.registry.BPItems;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;

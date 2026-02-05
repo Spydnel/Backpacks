@@ -1,12 +1,6 @@
 package com.spydnel.backpacks.mixins;
 
 import com.spydnel.backpacks.BackpackWearer;
-import com.spydnel.backpacks.Backpacks;
-import com.spydnel.backpacks.registry.BPDataAttatchments;
-import com.spydnel.backpacks.registry.BPSounds;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;

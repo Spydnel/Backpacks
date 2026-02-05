@@ -1,15 +1,11 @@
-package com.spydnel.backpacks.items;
+package com.spydnel.backpacks.common.items;
 
-import com.spydnel.backpacks.BackpackWearer;
-import com.spydnel.backpacks.Backpacks;
-import com.spydnel.backpacks.events.EntityInteractionEvents;
 import com.spydnel.backpacks.networking.BackpackOpenPayload;
 import com.spydnel.backpacks.registry.BPItems;
 import com.spydnel.backpacks.registry.BPSounds;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

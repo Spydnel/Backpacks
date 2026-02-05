@@ -1,7 +1,7 @@
-package com.spydnel.backpacks.events;
+package com.spydnel.backpacks.common.events;
 
 import com.spydnel.backpacks.Backpacks;
-import com.spydnel.backpacks.blocks.BackpackBlockEntity;
+import com.spydnel.backpacks.common.blocks.BackpackBlockEntity;
 import com.spydnel.backpacks.registry.BPBlocks;
 import com.spydnel.backpacks.registry.BPItems;
 import com.spydnel.backpacks.registry.BPSounds;
@@ -33,8 +33,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.Objects;
 
-import static com.spydnel.backpacks.blocks.BackpackBlock.FACING;
-import static com.spydnel.backpacks.blocks.BackpackBlock.WATERLOGGED;
+import static com.spydnel.backpacks.common.blocks.BackpackBlock.FACING;
+import static com.spydnel.backpacks.common.blocks.BackpackBlock.WATERLOGGED;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = Backpacks.MODID)
@@ -61,7 +61,7 @@ public class BackpackPickupEvents {
         //PICKUP
         if (player.isShiftKeyDown() && !hasChestPlate && block == BPBlocks.BACKPACK.get() && blockEntity != null) {
 
-            player.swing(hand);
+            player.swing(InteractionHand.MAIN_HAND);
             ItemStack itemstack = new ItemStack(BPBlocks.BACKPACK);
             itemstack.applyComponents(blockEntity.collectComponents());
             player.setItemSlot(EquipmentSlot.CHEST, itemstack);
@@ -71,15 +71,15 @@ public class BackpackPickupEvents {
                 level.removeBlockEntity(pos);
                 level.removeBlock(pos, false);
             }
-            event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
+            event.setCancellationResult(InteractionResult.FAIL);
             event.setCanceled(true);
         }
 
         //PLACEMENT
         if (player.isShiftKeyDown() && heldItem.isEmpty() && hasBackpack && event.getFace() == Direction.UP && !isAbove && isUnobstructed) {
 
-            player.swing(hand);
-            player.swingingArm = InteractionHand.MAIN_HAND;
+            player.swing(InteractionHand.MAIN_HAND);
+            //player.swingingArm = InteractionHand.MAIN_HAND;
 
 
             BlockState state = BPBlocks.BACKPACK.get().defaultBlockState()
@@ -101,7 +101,7 @@ public class BackpackPickupEvents {
                 chestSlotItem.shrink(1);
                 level.playSound(null, pos.above(), BPSounds.BACKPACK_PLACE.value(), SoundSource.BLOCKS);
             }
-            event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
+            event.setCancellationResult(InteractionResult.FAIL);
             event.setCanceled(true);
         }
     }

@@ -1,7 +1,7 @@
 package com.spydnel.backpacks.registry;
 
 import com.spydnel.backpacks.Backpacks;
-import com.spydnel.backpacks.blocks.BackpackBlock;
+import com.spydnel.backpacks.common.blocks.BackpackBlock;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;

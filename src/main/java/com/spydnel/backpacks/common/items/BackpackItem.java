@@ -1,34 +1,17 @@
-package com.spydnel.backpacks.items;
+package com.spydnel.backpacks.common.items;
 
-import com.google.common.base.Suppliers;
-import com.spydnel.backpacks.models.BackpackModel;
-import com.spydnel.backpacks.registry.BPLayers;
 import com.spydnel.backpacks.registry.BPSounds;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.AgeableListModel;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.Model;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.ClientHooks;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class BackpackItem extends BlockItem implements Equipable {
     public BackpackItem(Block block, Properties properties) {

@@ -1,7 +1,7 @@
 package com.spydnel.backpacks.registry;
 
 import com.spydnel.backpacks.Backpacks;
-import com.spydnel.backpacks.items.BackpackItem;
+import com.spydnel.backpacks.common.items.BackpackItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
